@@ -81,7 +81,6 @@ public class DbHandler extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
 
-        //values.put(TRANSACTION_COL, transaction_id);
         values.put(DATE_COL, date);
         values.put(ACCOUNT_COL, account);
         values.put(TYPE_COL,type);
@@ -93,52 +92,40 @@ public class DbHandler extends SQLiteOpenHelper {
     }
 
     public ArrayList<Account> readAccounts() {
-        // on below line we are creating a
-        // database for reading our database.
+
         SQLiteDatabase db = this.getReadableDatabase();
 
-        // on below line we are creating a cursor with query to read data from database.
         Cursor cursorAccount = db.rawQuery("SELECT * FROM " + TABLE_ACCOUNT, null);
 
-        // on below line we are creating a new array list.
         ArrayList<Account> accountArrayList = new ArrayList<>();
 
-        // moving our cursor to first position.
         if (cursorAccount.moveToFirst()) {
             do {
-                // on below line we are adding the data from cursor to our array list.
                 accountArrayList.add(new Account(cursorAccount.getString(0),
                         cursorAccount.getString(1),
                         cursorAccount.getString(2),
                         cursorAccount.getDouble(3)));
             } while (cursorAccount.moveToNext());
-            // moving our cursor to next.
         }
-        // at last closing our cursor
-        // and returning our array list.
+
         cursorAccount.close();
         return accountArrayList;
     }
     public ArrayList<Transaction> readTransactions(int limit) {
-        // on below line we are creating a
-        // database for reading our database.
+
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursorTransactions;
         if (limit == 0){
             cursorTransactions = db.rawQuery("SELECT * FROM " + TABLE_TRANSACTIONS, null);
         }
         else {
-            // on below line we are creating a cursor with query to read data from database.
             cursorTransactions = db.rawQuery("SELECT * FROM " + TABLE_TRANSACTIONS + " LIMIT " + String.valueOf(limit), null);
         }
-        //cursorTransactions = db.rawQuery("SELECT * FROM " + TABLE_TRANSACTIONS + " LIMIT 10", null);
-        // on below line we are creating a new array list.
+
         ArrayList<Transaction> transactionsArrayList = new ArrayList<>();
 
-        // moving our cursor to first position.
         if (cursorTransactions.moveToFirst()) {
             do {
-                // on below line we are adding the data from cursor to our array list.
                 ExpenseType type;
                 if(cursorTransactions.getString(3).equals("Expense")){
                     type = ExpenseType.EXPENSE;
@@ -159,21 +146,16 @@ public class DbHandler extends SQLiteOpenHelper {
                         type,
                         cursorTransactions.getDouble(4)));
             } while (cursorTransactions.moveToNext());
-            // moving our cursor to next.
         }
-        // at last closing our cursor
-        // and returning our array list.
+
         cursorTransactions.close();
         return transactionsArrayList;
     }
     public boolean updateData(String accountNo, double balance) {
 
-        // calling a method to get writable database.
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        // on below line we are passing all values
-        // along with its key and value pair.
         values.put(BALANCE_COL, balance);
         long result;
         try{
@@ -182,8 +164,7 @@ public class DbHandler extends SQLiteOpenHelper {
 
             result = -1;
         }
-        // on below line we are calling a update method to update our database and passing our values.
-        // and we are comparing it with name of our course which is stored in original name variable.
+
         db.close();
         if(result == -1){
             return false;

@@ -13,15 +13,6 @@ import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.model.ExpenseType;
 public class PersistentAccountDAO implements AccountDAO {
     private final DbHandler db;
 
-    private static final String TABLE_ACCOUNT = "account";
-
-    private static final String ACCOUNT_COL = "account_no";
-    private static final String BANK_COL = "bank_name";
-    private static final String HOLDER_COL = "holder_name";
-    private static final String BALANCE_COL = "init_balance";
-
-
-
     public PersistentAccountDAO(DbHandler db){
         this.db = db;
     }
@@ -40,7 +31,6 @@ public class PersistentAccountDAO implements AccountDAO {
     @Override
     public List<Account> getAccountsList() {
         List<Account> accounts = this.db.readAccounts();
-        //List<Account> accounts = new ArrayList<Account>();
         return accounts;
     }
 
@@ -65,7 +55,7 @@ public class PersistentAccountDAO implements AccountDAO {
     public void removeAccount(String accountNo) throws InvalidAccountException {
         int result = this.db.deleteData("account","accountno",accountNo);
         if(result == 0){
-            throw new InvalidAccountException("Account number is invalid");
+            throw new InvalidAccountException("Account is invalid");
         }
 
 

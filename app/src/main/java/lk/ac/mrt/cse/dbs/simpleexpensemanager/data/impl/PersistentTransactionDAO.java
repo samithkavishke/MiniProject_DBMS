@@ -18,11 +18,6 @@ import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.model.ExpenseType;
 
 public class PersistentTransactionDAO implements TransactionDAO {
     private DbHandler db;
-    private static final String TRANSACTION_COL = "transaction_id";
-    private static final String DATE_COL = "date";
-    private static final String TYPE_COL = "type";
-    private static final String AMOUNT_COL = "amount";
-    private static final String ACCOUNT_COL = "account_no";
 
     public PersistentTransactionDAO(DbHandler db){
         this.db = db;
@@ -47,25 +42,25 @@ public class PersistentTransactionDAO implements TransactionDAO {
 
     @Override
     public List<Transaction> getAllTransactionLogs() {
-        List<Transaction> transactions = new ArrayList<Transaction>();
-        transactions = this.db.readTransactions(0);
-        return transactions;
+        List<Transaction> transactions = this.db.readTransactions(0);
+        List<Transaction> retransactions = new ArrayList<>();
+        for(int i = transactions.size()-1;i >=0;i--){
+            retransactions.add(transactions.get(i));
+        }
+        return retransactions;
     }
 
     @Override
     public List<Transaction> getPaginatedTransactionLogs(int limit) {
-        List<Transaction> transactions = new ArrayList<Transaction>();
-        transactions = this.db.readTransactions(limit);
-        return transactions;
+        List<Transaction> transactions = this.db.readTransactions(limit);
+        List<Transaction> retransactions = new ArrayList<>();
+        for(int i = transactions.size()-1;i >=0;i--){
+            retransactions.add(transactions.get(i));
+        }
+        return retransactions;
     }
 
-    public ExpenseType getExpense(String expense){
-        if(expense.equals("Expense")){
-            return ExpenseType.EXPENSE;
-        }else{
-            return ExpenseType.INCOME;
-        }
-    }
+
 
     public String getStringExpense(ExpenseType expense){
         if(expense == ExpenseType.EXPENSE){
@@ -75,21 +70,12 @@ public class PersistentTransactionDAO implements TransactionDAO {
         }
     }
 
-    public Date stringToDate(String strDate){
-        SimpleDateFormat dateFormat = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.ENGLISH);
-        Date date = new Date();
-        try{
-            date = dateFormat.parse(strDate);
-        }catch(Exception e){
-            System.out.println(e);
-        }
-        return date;
-    }
+
 
     public void removeTransaction(String transactionNo) throws InvalidAccountException {
         int result = this.db.deleteData("transaction","transaction_no",transactionNo);
         if(result == 0){
-            throw new InvalidAccountException("Transactoin number is invalid");
+            throw new InvalidAccountException("Transaction  is invalid");
         }
     }
 
