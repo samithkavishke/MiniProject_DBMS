@@ -40,13 +40,13 @@ public class DbHandler extends SQLiteOpenHelper {
                 + ACCOUNT_COL + " TEXT PRIMARY KEY, "
                 + BANK_COL + " TEXT,"
                 + HOLDER_COL + " TEXT,"
-                + BALANCE_COL + " REAL)";
+                + BALANCE_COL + " REAL);";
         String query2 = "CREATE TABLE " + TABLE_TRANSACTIONS + " ("
                 + TRANSACTION_COL + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + DATE_COL + " TEXT,"
                 + ACCOUNT_COL + " TEXT,"
                 + TYPE_COL + " TEXT,"
-                + AMOUNT_COL + "REAL)";
+                + AMOUNT_COL + " REAL)";
 
         sqLiteDatabase.execSQL(query1);
         sqLiteDatabase.execSQL(query2);
