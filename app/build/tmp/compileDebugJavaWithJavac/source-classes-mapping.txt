@@ -13,10 +13,10 @@ lk/ac/mrt/cse/dbs/simpleexpensemanager/ui/ExpenseLogsFragment.java
  lk.ac.mrt.cse.dbs.simpleexpensemanager.ui.ExpenseLogsFragment
 lk/ac/mrt/cse/dbs/simpleexpensemanager/data/model/ExpenseType.java
  lk.ac.mrt.cse.dbs.simpleexpensemanager.data.model.ExpenseType
-lk/ac/mrt/cse/dbs/simpleexpensemanager/data/database/DBHandler.java
- lk.ac.mrt.cse.dbs.simpleexpensemanager.control.DBHandler
 lk/ac/mrt/cse/dbs/simpleexpensemanager/data/impl/PersistentAccountDAO.java
  lk.ac.mrt.cse.dbs.simpleexpensemanager.data.impl.PersistentAccountDAO
+lk/ac/mrt/cse/dbs/simpleexpensemanager/data/database/DbHandler.java
+ lk.ac.mrt.cse.dbs.simpleexpensemanager.data.database.DbHandler
 lk/ac/mrt/cse/dbs/simpleexpensemanager/data/TransactionDAO.java
  lk.ac.mrt.cse.dbs.simpleexpensemanager.data.TransactionDAO
 lk/ac/mrt/cse/dbs/simpleexpensemanager/ui/ManageExpensesFragment.java
