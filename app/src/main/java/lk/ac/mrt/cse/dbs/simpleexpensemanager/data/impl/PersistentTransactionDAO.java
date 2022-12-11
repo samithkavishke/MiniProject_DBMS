@@ -1,83 +1,46 @@
 package lk.ac.mrt.cse.dbs.simpleexpensemanager.data.impl;
 
-import android.database.Cursor;
-
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
-import lk.ac.mrt.cse.dbs.simpleexpensemanager.control.PersistentExpenseManager;
+import lk.ac.mrt.cse.dbs.simpleexpensemanager.control.DBHandler;
 import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.TransactionDAO;
-import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.database.DbHandler;
-import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.exception.InvalidAccountException;
-import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.model.Account;
-import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.model.Transaction;
 import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.model.ExpenseType;
+import lk.ac.mrt.cse.dbs.simpleexpensemanager.data.model.Transaction;
 
 public class PersistentTransactionDAO implements TransactionDAO {
-    private DbHandler db;
 
-    public PersistentTransactionDAO(DbHandler db){
-        this.db = db;
+    private DBHandler dbHandler;
+    public PersistentTransactionDAO(DBHandler dbHandler) {
+        this.dbHandler = dbHandler;
     }
 
     @Override
     public void logTransaction(Date date, String accountNo, ExpenseType expenseType, double amount) {
-        if(expenseType == ExpenseType.EXPENSE){
-            PersistentAccountDAO pa = new PersistentAccountDAO(this.db);
-            try {
-                Account user = pa.getAccount(accountNo);
-                if(user.getBalance() < amount){
-                    return;
-                }
-            }catch (Exception e){
-                System.out.println("Invalid Account");
-            }
-        }
-        String sDate = date.toString();
-        this.db.addNewTransaction(sDate,accountNo, amount, getStringExpense(expenseType));
+        String string_date = date.toString();
+        String string_expense_type = getStringExpense(expenseType);
+
+//        Transaction transaction = new Transaction(date,accountNo,expenseType,amount);
+        dbHandler.addNewTransaction(string_date,accountNo,string_expense_type,amount);
     }
 
-    @Override
-    public List<Transaction> getAllTransactionLogs() {
-        List<Transaction> transactions = this.db.readTransactions(0);
-        List<Transaction> retransactions = new ArrayList<>();
-        for(int i = transactions.size()-1;i >=0;i--){
-            retransactions.add(transactions.get(i));
-        }
-        return retransactions;
-    }
-
-    @Override
-    public List<Transaction> getPaginatedTransactionLogs(int limit) {
-        List<Transaction> transactions = this.db.readTransactions(limit);
-        List<Transaction> retransactions = new ArrayList<>();
-        for(int i = transactions.size()-1;i >=0;i--){
-            retransactions.add(transactions.get(i));
-        }
-        return retransactions;
-    }
-
-
-
-    public String getStringExpense(ExpenseType expense){
-        if(expense == ExpenseType.EXPENSE){
+    private String getStringExpense(ExpenseType expenseType) {
+        if (expenseType == ExpenseType.EXPENSE){
             return "Expense";
         }else{
             return "Income";
         }
     }
 
-
-
-    public void removeTransaction(String transactionNo) throws InvalidAccountException {
-        int result = this.db.deleteData("transaction","transaction_no",transactionNo);
-        if(result == 0){
-            throw new InvalidAccountException("Transaction  is invalid");
-        }
+    @Override
+    public List<Transaction> getAllTransactionLogs() {
+        List<Transaction> transactionList = dbHandler.getTransactionLogs(0);
+        return transactionList;
     }
 
+    @Override
+    public List<Transaction> getPaginatedTransactionLogs(int limit) {
+        List<Transaction> transactionList = dbHandler.getTransactionLogs(limit);
+        return transactionList;
+    }
 }
-

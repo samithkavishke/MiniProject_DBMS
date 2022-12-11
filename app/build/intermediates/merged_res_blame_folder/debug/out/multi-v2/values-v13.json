@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "C:\\Users\\Chanuka lakshan\\Documents\\Semster_3_Continued\\Database_Systems\\SimpleExpenseManager\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-v13\\values-v13.xml",
+            "outputFile": "C:\\Engineering\\DBMS\\Project\\Mini Project\\Rebased\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-v13\\values-v13.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Chanuka lakshan\\.gradle\\caches\\transforms-2\\files-2.1\\e34959173497ceba9cee14729c6580d1\\appcompat-v7-26.1.0\\res\\values-v13\\values-v13.xml",
+                    "source": "C:\\Users\\Asus\\.gradle\\caches\\transforms-2\\files-2.1\\e34959173497ceba9cee14729c6580d1\\appcompat-v7-26.1.0\\res\\values-v13\\values-v13.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
