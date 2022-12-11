@@ -43,4 +43,7 @@ public class PersistentTransactionDAO implements TransactionDAO {
         List<Transaction> transactionList = dbHandler.getTransactionLogs(limit);
         return transactionList;
     }
+
+
+
 }
